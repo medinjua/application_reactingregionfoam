@@ -1,0 +1,3 @@
+reactingFoam.C
+
+EXE = $(PWD)/../bin/reactingRegionFoam
