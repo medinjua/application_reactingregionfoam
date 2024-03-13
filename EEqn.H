@@ -16,7 +16,7 @@
         forAll(cellsCatalyst, cc)
         {
             label celli = cellsCatalyst[cc];
-            Qdot[celli] = HRR[celli];
+            Qdot[celli] = HRR[celli]*(1.0 - epspore[celli]);
         }
         //******************************************************************
 
@@ -24,9 +24,8 @@
 
         fvScalarMatrix EEqn
         (
-            fvm::ddt(epspore*rho, he) + epspore*mvConvection->fvmDiv(phi, he)
-          + fvc::ddt((1.0-epspore)*rhos*cpvs, T)  
-          + epspore*fvc::ddt(rho, K) + fvc::div(phi, K)
+            fvm::ddt((epspore*rho*cp_f + (1.0-epspore)*rhos*cpvs)/cp_f, he) + epspore*mvConvection->fvmDiv(phi, he)
+          //+ epspore*fvc::ddt(rho, K) + fvc::div(phi, K)
           + (
                 he.name() == "e"
                 ? mvConvection->fvcDiv(fvc::absolute(phi, rho, U), p/rho)
