@@ -105,9 +105,6 @@ fields.add(thermo.he());
 // Additions for porous catalyst simulations
 // ****************************************************************************
 
-// chemistryModel required
-autoPtr<basicChemistryModel> pChemistry(basicChemistryModel::New(thermo));
-
 const word inertSpecie(thermo.properties().lookup("inertSpecie"));
 if (!composition.species().found(inertSpecie))
 {

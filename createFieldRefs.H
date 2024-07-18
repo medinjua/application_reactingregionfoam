@@ -5,9 +5,6 @@ const volScalarField& T = thermo.T();
 // Additions for porous catalyst simulations
 // ****************************************************************************
 
-// chemistry model required
-basicChemistryModel& chemistry = pChemistry();
-
 // Define cell set list with and without catalyst zone
 const word cellSetCatalyst = "CatalystRegionZone";
 label zoneID = mesh.cellZones().findZoneID(cellSetCatalyst);

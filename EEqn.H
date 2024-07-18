@@ -3,21 +3,7 @@
     if(!isothermalFluid){
         //**********************************************************************
         // Modification catalyst simulations
-        // TODO: Modify alphaeff.H here
         #include "alphaeff.H"
-        // Reinitialize Qdot to zero
-        Qdot *= 0.0;
-
-        // First, calculate the heat release rate by the chemistry pointer
-        // Note the HRR units (J/m3/s)
-        // Note: a call to chemistry.calculate() must have been done before
-        volScalarField::Internal HRR(chemistry.Qdot().ref());
-        // Now set the HRR in the catalyst cells
-        forAll(cellsCatalyst, cc)
-        {
-            label celli = cellsCatalyst[cc];
-            Qdot[celli] = HRR[celli]*(1.0 - epspore[celli]);
-        }
         //******************************************************************
 
         volScalarField& he = thermo.he();
@@ -37,8 +23,7 @@
           - fvm::laplacian(kappaeffbycp, he)    // see definition of
                                                 // thermophysicalTransport>divq
           ==
-            //reaction->Qdot()          // commented out for replacement *******
-            Qdot                        // replaced HRR             ************
+            (1.0 - epspore)*reaction->Qdot()
           + fvModels.source(rho, he)
         );
 
