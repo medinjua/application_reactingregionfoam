@@ -148,19 +148,19 @@ volScalarField Qdot
 );
 
 
-// Field for species i reaction rate [kg/m3/s]
-volScalarField omegarr_i
+// Field for second auxiliary porosity []
+volScalarField epscatalyst
 (
     IOobject
     (
-        "omegarr_i",
+        "epscatalyst",
         runTime.timeName(),
         mesh,
         IOobject::NO_READ,
         IOobject::NO_WRITE
     ),
     mesh,
-    dimensionedScalar("omegarr_i",dimensionSet(1,-3,-1,0,0,0, 0),0)
+    dimensionedScalar("epscatalyst",dimensionSet(0,0,0,0,0,0, 0),0)
 );
 
 // Check whether solid properties were given

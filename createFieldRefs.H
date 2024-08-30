@@ -34,6 +34,12 @@ forAll( cellsNoCatalyst, cc ){
     epspore[celli] = 1.0;
 }
 
+// Overwrite auxiliary porosity (epsilon = 1) for catalyst zone
+forAll( cellsCatalyst, cc ){
+    label celli        = cellsCatalyst[cc];
+    epscatalyst[celli] = epspore[celli];
+}
+
 // Check for option to run isothermal simulation (deactivates energy eqn)
 bool isothermalFluid = readBool(thermo.properties().lookup("isothermalFlow"));
 if( isothermalFluid ){

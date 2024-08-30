@@ -23,7 +23,7 @@
           - fvm::laplacian(kappaeffbycp, he)    // see definition of
                                                 // thermophysicalTransport>divq
           ==
-            (1.0 - epspore)*reaction->Qdot()
+            epscatalyst*reaction->Qdot()
           + fvModels.source(rho, he)
         );
 

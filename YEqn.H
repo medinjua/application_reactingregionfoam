@@ -30,7 +30,7 @@ forAll(Y, i)
           // DEff is simply the thermal diffusion coefficient
           + epspore*thermophysicalTransport->divj(Yi)
          ==
-            (1.0-epspore)*reaction->R(Yi)
+            epscatalyst*reaction->R(Yi)
           + fvModels.source(rho, Yi)
         );
 
