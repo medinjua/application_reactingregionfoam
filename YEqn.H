@@ -11,6 +11,31 @@ tmp<fv::convectionScheme<scalar>> mvConvection
 
 reaction->correct();
 
+// Construct correction to the diffusion velocity
+surfaceScalarField JF
+(
+    IOobject
+    (
+        "JF",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE
+    ),
+    mesh,
+    dimensionedScalar
+    (
+        "zero",
+        dimMass/dimArea/dimTime,
+        0
+    )
+);
+
+forAll(Y, i)
+{
+    JF += thermophysicalTransport->j(Y[i]);
+}
+
 forAll(Y, i)
 {
     if (composition.solve(i))
@@ -29,6 +54,7 @@ forAll(Y, i)
           // this->alpha() refers to the alphaField, simply a volume fraction
           // DEff is simply the thermal diffusion coefficient
           + epspore*thermophysicalTransport->divj(Yi)
+          - epspore*fvc::div(fvc::interpolate(Yi)*JF*mesh.magSf())  // Correction to the diffusion velocity
          ==
             epscatalyst*reaction->R(Yi)
           + fvModels.source(rho, Yi)

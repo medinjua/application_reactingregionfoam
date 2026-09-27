@@ -38,6 +38,18 @@
         thermo.correct();
 
     }
+    else{
+
+        volScalarField& he = thermo.he();
+
+        // Isothermal thermodynamic closure
+        he = thermo.he(p, Tfixed);
+
+        fvConstraints.constrain(he);
+
+        thermo.correct();
+  
+    }
 
     Info<< "min/max(T) = "
         << min(T).value() << ", " << max(T).value() << endl;

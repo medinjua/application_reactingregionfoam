@@ -163,6 +163,20 @@ volScalarField epscatalyst
     dimensionedScalar("epscatalyst",dimensionSet(0,0,0,0,0,0, 0),0)
 );
 
+// Field for initial temperature field, in case it is fixed
+volScalarField Tfixed
+(
+    IOobject
+    (
+        "Tfixed",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE
+    ),
+    thermo.T()
+);
+
 // Check whether solid properties were given
 if( !readScalar(thermo.properties().lookup("kappaSolid")) || !readScalar(thermo.properties().lookup("rhoSolid"))
     || !readScalar(thermo.properties().lookup("cvSolid"))  )
